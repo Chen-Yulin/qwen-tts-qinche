@@ -1,0 +1,44 @@
+# Qwen-TTS 微调项目依赖
+
+# 核心依赖
+# torch>=2.0.0
+# torchaudio>=2.0.0
+transformers>=4.37.0
+accelerate>=0.25.0
+datasets>=2.16.0
+peft>=0.7.0
+
+# 音频处理
+librosa>=0.10.0
+soundfile>=0.12.0
+pydub>=0.25.0
+ffmpeg-python>=0.2.0
+
+# B站视频下载
+yt-dlp>=2024.1.0
+bilibili-api-python>=16.0.0
+
+# 语音识别 (用于生成转录)
+faster-whisper>=0.10.0
+funasr>=1.0.0
+
+# 数据处理
+pandas>=2.0.0
+numpy>=1.24.0
+tqdm>=4.66.0
+scipy>=1.11.0
+
+# 评估指标
+pesq>=0.0.4
+pystoi>=0.3.3
+
+# 推理加速
+# onnxruntime-gpu>=1.16.0
+# tensorrt>=8.6.0
+# vllm>=0.2.0
+
+# 工具
+pyyaml>=6.0
+loguru>=0.7.0
+rich>=13.0.0
+click>=8.1.0

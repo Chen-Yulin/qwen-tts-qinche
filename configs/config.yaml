@@ -1,0 +1,119 @@
+# Qwen-TTS 微调配置文件
+
+# 项目路径
+paths:
+  project_root: "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc"
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  audio_segments: "data/audio_segments"
+  models: "models"
+  outputs: "outputs"
+  logs: "logs"
+
+# 数据源配置
+data_sources:
+  bilibili_videos:
+    - url: "https://www.bilibili.com/video/BV1NjzAB2EPY"
+      name: "qinche_01"
+      duration_min: 11
+    - url: "https://www.bilibili.com/video/BV168UQBeEKp"
+      name: "qinche_02"
+      duration_min: 35
+
+# 音频处理配置
+audio:
+  sample_rate: 24000
+  mono: true
+  format: "wav"
+  # 分段配置
+  segment:
+    min_duration: 2.0  # 最小片段时长(秒)
+    max_duration: 15.0  # 最大片段时长(秒)
+    silence_threshold: -40  # 静音阈值(dB)
+    min_silence_duration: 0.5  # 最小静音时长(秒)
+
+# Whisper 转录配置
+transcription:
+  model: "large-v3"
+  language: "zh"
+  device: "cuda"
+  compute_type: "float16"
+  vad_filter: true
+  vad_parameters:
+    min_silence_duration_ms: 500
+
+# 模型配置
+model:
+  name: "Qwen/Qwen2-Audio-7B-Instruct"  # 或使用专门的TTS模型
+  # 备选: "fishaudio/fish-speech-1.4"
+  dtype: "bfloat16"
+  device_map: "auto"
+
+# LoRA 微调配置
+lora:
+  r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# 训练配置
+training:
+  output_dir: "outputs/qinche_finetune"
+  num_train_epochs: 10
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  lr_scheduler_type: "cosine"
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+  save_total_limit: 3
+  fp16: false
+  bf16: true
+  gradient_checkpointing: true
+  dataloader_num_workers: 4
+  remove_unused_columns: false
+  report_to: "tensorboard"
+
+# 推理配置
+inference:
+  max_new_tokens: 2048
+  temperature: 0.7
+  top_p: 0.9
+  do_sample: true
+
+# 推理加速配置
+acceleration:
+  # ONNX 导出配置
+  onnx:
+    opset_version: 17
+    optimize: true
+  # TensorRT 配置
+  tensorrt:
+    fp16: true
+    max_batch_size: 8
+  # vLLM 配置
+  vllm:
+    tensor_parallel_size: 1
+    gpu_memory_utilization: 0.9
+
+# 评估配置
+evaluation:
+  metrics:
+    - "mel_cepstral_distortion"
+    - "speaker_similarity"
+    - "mos_prediction"
+  reference_audio_dir: "data/audio_segments"
+  num_eval_samples: 20
