@@ -1,0 +1,7 @@
+Qwen-TTS Inference Benchmark Results
+Model: output/checkpoint-epoch-9
+Text: 大家好，我叫秦彻，今天天气真不错。
+Runs: 5
+
+torch.compile: 3.798s (1.22x)
+Flash Attention 2: 4.646s (1.00x)

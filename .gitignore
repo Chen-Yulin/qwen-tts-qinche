@@ -44,11 +44,6 @@ logs/
 *.log
 tensorboard/
 
-# Evaluation outputs
-eval_output/
-eval_results.json
-benchmark_results.txt
-
 # Cache
 .cache/
 *.cache

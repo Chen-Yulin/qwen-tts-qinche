@@ -74,7 +74,7 @@ python scripts/prepare_qwen_tts_data.py \
 bash scripts/run_finetuning.sh
 ```
 
-该脚本会自动：
+训练流程：
 1. 提取 audio_codes
 2. 进行 SFT 微调
 3. 保存 checkpoint 到 `output/`
@@ -83,7 +83,7 @@ bash scripts/run_finetuning.sh
 
 ```bash
 python scripts/test_inference.py \
-  --model_path output/checkpoint-epoch-29 \
+  --model_path output/checkpoint-epoch-5 \
   --speaker_name qinche \
   --text "大家好，我叫秦彻" \
   --output test_output.wav
@@ -95,7 +95,7 @@ python scripts/test_inference.py \
 |------|--------|------|
 | BATCH_SIZE | 4 | 批次大小 |
 | LR | 1e-5 | 学习率 |
-| EPOCHS | 30 | 训练轮数 |
+| EPOCHS | 6 | 训练轮数 |
 | SPEAKER_NAME | qinche | 说话人名称 |
 
 修改 `scripts/run_finetuning.sh` 中的配置即可调整。

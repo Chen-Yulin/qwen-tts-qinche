@@ -28,15 +28,12 @@ tqdm>=4.65.0
 pyyaml>=6.0
 loguru>=0.7.0
 
-# ========== 推理加速 (可选) ==========
 
-# Flash Attention 2 (需要 CUDA 11.6+, 手动安装)
 # pip install flash-attn --no-build-isolation
 
 # INT8/INT4 量化
 bitsandbytes>=0.41.0
 
-# ========== 评估指标 ==========
 
 # 说话人相似度
 speechbrain>=1.0.0
