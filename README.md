@@ -1,172 +1,117 @@
-# Qwen-TTS 秦彻音色微调项目
+# Qwen3-TTS 秦彻音色微调项目
 
-基于 Qwen-TTS 模型，使用B站秦彻语音数据进行微调，实现音色复刻。
+基于 Qwen3-TTS 模型，使用秦彻语音数据进行 SFT 微调，实现音色克隆。
 
 ## 项目结构
 
 ```
 qwen-tts-qc/
-├── configs/
-│   └── config.yaml          # 配置文件
-├── data/
-│   ├── raw/                  # 原始下载的音频
-│   ├── processed/            # 处理后的数据
-│   └── audio_segments/       # 分割后的音频片段
+├── src/                          # 核心训练代码
+│   ├── sft_12hz.py              # 微调主脚本
+│   ├── dataset.py               # 数据集定义
+│   └── prepare_data.py          # Audio codes 提取
 ├── scripts/
-│   ├── download_bilibili.py  # B站视频下载
-│   ├── audio_preprocessing.py # 音频预处理
-│   ├── transcribe.py         # 语音转录
-│   ├── prepare_dataset.py    # 数据集准备
-│   ├── train.py              # 模型训练
-│   ├── inference.py          # 推理测试
-│   ├── accelerate_inference.py # 推理加速
-│   ├── evaluate.py           # 模型评估
-│   └── run_pipeline.py       # 完整管线
-├── models/                   # 模型存储
-├── outputs/                  # 训练输出
-├── logs/                     # 日志
-└── requirements.txt          # 依赖
+│   ├── prepare_qwen_tts_data.py # 数据预处理（VAD+转录）
+│   ├── run_finetuning.sh        # 训练启动脚本
+│   └── test_inference.py        # 推理测试
+├── data/
+│   ├── raw/                     # 原始音频
+│   ├── raw_videos/              # 原始视频（可选）
+│   ├── processed/segments/      # 切分后的片段
+│   ├── train_raw.jsonl          # 原始训练数据
+│   └── train_with_codes.jsonl   # 含 audio_codes 的训练数据
+├── models/                       # 预训练模型
+│   ├── Qwen3-TTS-Tokenizer-12Hz
+│   └── Qwen3-TTS-12Hz-1.7B-Base
+├── output/                       # 微调后的模型
+├── docs/
+│   └── technical_report.md      # 技术报告
+└── requirements.txt
 ```
 
 ## 快速开始
 
-### 1. 安装依赖
+### 1. 安���依赖
 
 ```bash
-cd qwen-tts-qc
 pip install -r requirements.txt
-
-# 安装ffmpeg (用于音频处理)
-# Ubuntu/Debian:
-sudo apt-get install ffmpeg
-
-# macOS:
-brew install ffmpeg
 ```
 
-### 2. 运行完整数据处理管线
+### 2. 准备数据
+
+#### 2.1 从视频提取音频（可选）
 
 ```bash
-# 运行完整管线(下载 -> 预处理 -> 转录 -> 划分数据集)
-python scripts/run_pipeline.py
-
-# 如果已有音频文件，跳过下载
-python scripts/run_pipeline.py --skip-download
-
-# 使用cookies下载高清音频(可选)
-python scripts/run_pipeline.py --cookies cookies.txt
+mkdir -p data/raw
+for f in data/raw_videos/*.mp4; do
+  name=$(basename "$f" .mp4)
+  ffmpeg -i "$f" -vn -acodec pcm_s16le -ar 16000 -ac 1 "data/raw/${name}.wav" -y
+done
 ```
 
-### 3. 分步执行
+#### 2.2 处理音频（VAD切分 + Whisper转录）
 
 ```bash
-# Step 1: 下载B站视频音频
-python scripts/download_bilibili.py
-
-# Step 2: 音频预处理(分段、降噪)
-python scripts/audio_preprocessing.py
-
-# Step 3: 语音转录
-python scripts/transcribe.py
-
-# Step 4: 准备数据集
-python scripts/prepare_dataset.py
+python scripts/prepare_qwen_tts_data.py \
+  --raw_audio_dir data/raw \
+  --output_dir data/processed \
+  --output_jsonl data/train_raw.jsonl \
+  --whisper_model large
 ```
 
-### 4. 模型训练
+追加新数据：
+```bash
+python scripts/prepare_qwen_tts_data.py \
+  --raw_audio_dir data/raw \
+  --output_dir data/processed \
+  --output_jsonl data/train_raw.jsonl \
+  --append
+```
+
+### 3. 训练
 
 ```bash
-# 使用LoRA微调
-python scripts/train.py
-
-# 指定配置
-python scripts/train.py --config configs/config.yaml
-
-# 从checkpoint恢复
-python scripts/train.py --resume outputs/qinche_finetune/checkpoint-xxx
+bash scripts/run_finetuning.sh
 ```
 
-### 5. 推理测试
+该脚本会自动：
+1. 提取 audio_codes
+2. 进行 SFT 微调
+3. 保存 checkpoint 到 `output/`
+
+### 4. 推理测试
 
 ```bash
-# 基础推理
-python scripts/inference.py --text "你好，我是秦彻" --output output.wav
-
-# 使用微调后的模型
-python scripts/inference.py \
-    --text "你好，我是秦彻" \
-    --lora-path outputs/qinche_finetune \
-    --output output.wav
+python scripts/test_inference.py \
+  --model_path output/checkpoint-epoch-29 \
+  --speaker_name qinche \
+  --text "大家好，我叫秦彻" \
+  --output test_output.wav
 ```
 
-### 6. 模型评估
+## 训练参数
 
-```bash
-# 评估合成质量
-python scripts/evaluate.py \
-    --ref-dir data/audio_segments \
-    --syn-dir outputs/synthesized \
-    --output evaluation_results.json
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| BATCH_SIZE | 4 | 批次大小 |
+| LR | 1e-5 | 学习率 |
+| EPOCHS | 30 | 训练轮数 |
+| SPEAKER_NAME | qinche | 说话人名称 |
+
+修改 `scripts/run_finetuning.sh` 中的配置即可调整。
+
+## 数据格式
+
+### train_raw.jsonl
+```json
+{"audio": "path/to/segment.wav", "text": "转录文本", "ref_audio": "path/to/ref.wav"}
 ```
 
-### 7. 推理加速
-
-```bash
-# 导出ONNX模型
-python scripts/accelerate_inference.py \
-    --action export-onnx \
-    --model-path outputs/qinche_finetune \
-    --output models/model.onnx
-
-# 转换为TensorRT
-python scripts/accelerate_inference.py \
-    --action convert-trt \
-    --model-path models/model.onnx \
-    --output models/model.trt
-
-# 性能基准测试
-python scripts/accelerate_inference.py \
-    --action benchmark \
-    --model-path outputs/qinche_finetune
+### train_with_codes.jsonl
+```json
+{"audio": "...", "text": "...", "ref_audio": "...", "audio_codes": [[...], [...], ...]}
 ```
 
-## 配置说明
+## 技术文档
 
-主要配置项在 `configs/config.yaml`:
-
-- `data_sources`: B站视频URL列表
-- `audio`: 音频处理参数(采样率、分段配置等)
-- `transcription`: Whisper转录配置
-- `model`: 基础模型配置
-- `lora`: LoRA微调参数
-- `training`: 训练超参数
-- `acceleration`: 推理加速配置
-
-## 评估指标
-
-- **MCD (Mel Cepstral Distortion)**: 梅尔倒谱失真，越低越好
-- **Speaker Similarity**: 说话人相似度，越高越好
-- **PESQ**: 语音质量感知评估，-0.5到4.5，越高越好
-- **STOI**: 短时客观可懂度，0到1，越高越好
-
-## 推理加速方案
-
-1. **ONNX Runtime**: 跨平台优化，支持CPU/GPU
-2. **TensorRT**: NVIDIA GPU专用优化，FP16加速
-3. **vLLM**: 大模型推理优化，支持连续批处理
-
-## 注意事项
-
-1. B站视频下载可能需要cookies才能获取高清音频
-2. Whisper转录需要GPU，建议使用large-v3模型
-3. 训练建议使用至少24GB显存的GPU
-4. 音频数据质量直接影响微调效果
-
-## 数据来源
-
-- https://www.bilibili.com/video/BV1NjzAB2EPY (11分钟)
-- https://www.bilibili.com/video/BV168UQBeEKp (35分钟)
-
-## License
-
-仅供学习研究使用，请遵守相关版权规定。
+详细技术方案见 [docs/technical_report.md](docs/technical_report.md)

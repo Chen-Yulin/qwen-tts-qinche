@@ -1,0 +1,158 @@
+{
+  "summary": {
+    "speaker_similarity": {
+      "mean": 0.4300151657313108,
+      "std": 0.13794217908274642,
+      "min": 0.11875445395708084,
+      "max": 0.6051406860351562
+    },
+    "pesq": {
+      "mean": 1.0626714289188386,
+      "std": 0.04394386667804284,
+      "min": 1.0258727073669434,
+      "max": 1.204764723777771
+    }
+  },
+  "details": [
+    {
+      "text": "又想在我脸上画什么",
+      "generated": "eval_output/paired_0000.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc005_seg0145.wav",
+      "speaker_similarity": 0.6051406860351562,
+      "pesq": 1.0409202575683594
+    },
+    {
+      "text": "你应该也习惯了",
+      "generated": "eval_output/paired_0001.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0136.wav",
+      "speaker_similarity": 0.5091472268104553,
+      "pesq": 1.0835113525390625
+    },
+    {
+      "text": "让我看看你有什么不平常的方法",
+      "generated": "eval_output/paired_0002.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0032.wav",
+      "speaker_similarity": 0.41747549176216125,
+      "pesq": 1.0258727073669434
+    },
+    {
+      "text": "国王的晚宴",
+      "generated": "eval_output/paired_0003.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc006_seg0051.wav",
+      "speaker_similarity": 0.2351798713207245,
+      "pesq": 1.204764723777771
+    },
+    {
+      "text": "主要是为了和我一起",
+      "generated": "eval_output/paired_0004.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc003_seg0016.wav",
+      "speaker_similarity": 0.4866009056568146,
+      "pesq": 1.0280635356903076
+    },
+    {
+      "text": "那些东西就算失去了",
+      "generated": "eval_output/paired_0005.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc002_seg0110.wav",
+      "speaker_similarity": 0.4288078844547272,
+      "pesq": 1.0465630292892456
+    },
+    {
+      "text": "那就努力记住这个晚上",
+      "generated": "eval_output/paired_0006.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc002_seg0090.wav",
+      "speaker_similarity": 0.5166945457458496,
+      "pesq": 1.0330091714859009
+    },
+    {
+      "text": "我的椅卧有很多种用法",
+      "generated": "eval_output/paired_0007.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0162.wav",
+      "speaker_similarity": 0.3999933898448944,
+      "pesq": 1.0516431331634521
+    },
+    {
+      "text": "再晚点人会更少",
+      "generated": "eval_output/paired_0008.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc006_seg0048.wav",
+      "speaker_similarity": 0.4842931628227234,
+      "pesq": 1.1309164762496948
+    },
+    {
+      "text": "哈哈哈哈",
+      "generated": "eval_output/paired_0009.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0124.wav",
+      "speaker_similarity": 0.19546397030353546,
+      "pesq": 1.0655438899993896
+    },
+    {
+      "text": "你看上别人开的哪艘船了",
+      "generated": "eval_output/paired_0010.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc006_seg0011.wav",
+      "speaker_similarity": 0.5103014707565308,
+      "pesq": 1.0629175901412964
+    },
+    {
+      "text": "你打算怎么办",
+      "generated": "eval_output/paired_0011.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc007_seg0043.wav",
+      "speaker_similarity": 0.5268703103065491,
+      "pesq": 1.129361629486084
+    },
+    {
+      "text": "它长大了不就和周围的树一样",
+      "generated": "eval_output/paired_0012.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc005_seg0081.wav",
+      "speaker_similarity": 0.5607349276542664,
+      "pesq": 1.0334995985031128
+    },
+    {
+      "text": "也可以现在报复我",
+      "generated": "eval_output/paired_0013.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0112.wav",
+      "speaker_similarity": 0.3048301339149475,
+      "pesq": 1.0481942892074585
+    },
+    {
+      "text": "出来旅游的这段时间",
+      "generated": "eval_output/paired_0014.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc005_seg0112.wav",
+      "speaker_similarity": 0.5507068634033203,
+      "pesq": 1.0635641813278198
+    },
+    {
+      "text": "你人真好,大慈善家。",
+      "generated": "eval_output/paired_0015.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc005_seg0007.wav",
+      "speaker_similarity": 0.5984076261520386,
+      "pesq": 1.0710831880569458
+    },
+    {
+      "text": "还远远不够",
+      "generated": "eval_output/paired_0016.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0043.wav",
+      "speaker_similarity": 0.22824734449386597,
+      "pesq": 1.0282419919967651
+    },
+    {
+      "text": "进攻又很强烈",
+      "generated": "eval_output/paired_0017.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0039.wav",
+      "speaker_similarity": 0.41197529435157776,
+      "pesq": 1.0335588455200195
+    },
+    {
+      "text": "先要一一成事",
+      "generated": "eval_output/paired_0018.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc001_seg0115.wav",
+      "speaker_similarity": 0.11875445395708084,
+      "pesq": 1.0392664670944214
+    },
+    {
+      "text": "你的表情不像是摔下来的",
+      "generated": "eval_output/paired_0019.wav",
+      "reference": "/workspace/chenyl29@xiaopeng.com/qwen-tts-qc/data/processed/segments/qc002_seg0085.wav",
+      "speaker_similarity": 0.5106777548789978,
+      "pesq": 1.0329325199127197
+    }
+  ]
+}

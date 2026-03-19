@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (large files)
+data/raw/*.wav
+data/raw_videos/
+data/processed/segments/
+*.wav
+*.mp3
+*.mp4
+
+# Models (large files)
+models/
+output/checkpoint-*/
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Logs
+logs/
+*.log
+tensorboard/
+
+# Evaluation outputs
+eval_output/
+eval_results.json
+benchmark_results.txt
+
+# Cache
+.cache/
+*.cache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Keep structure
+!data/.gitkeep
+!models/.gitkeep
+!output/.gitkeep

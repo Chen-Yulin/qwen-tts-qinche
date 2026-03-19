@@ -42,50 +42,24 @@ transcription:
   vad_parameters:
     min_silence_duration_ms: 500
 
-# 模型配置
+# Qwen3-TTS 模型配置
 model:
-  name: "Qwen/Qwen2-Audio-7B-Instruct"  # 或使用专门的TTS模型
-  # 备选: "fishaudio/fish-speech-1.4"
+  # TTS 模型 (用于微调)
+  tts_model: "Qwen/Qwen3-TTS-12Hz-1.7B-Base"
+  # Tokenizer (用于音频编码)
+  tokenizer_model: "Qwen/Qwen3-TTS-Tokenizer-12Hz"
   dtype: "bfloat16"
-  device_map: "auto"
-
-# LoRA 微调配置
-lora:
-  r: 16
-  lora_alpha: 32
-  lora_dropout: 0.05
-  target_modules:
-    - "q_proj"
-    - "k_proj"
-    - "v_proj"
-    - "o_proj"
-    - "gate_proj"
-    - "up_proj"
-    - "down_proj"
-  bias: "none"
-  task_type: "CAUSAL_LM"
+  device: "cuda:0"
 
 # 训练配置
 training:
   output_dir: "outputs/qinche_finetune"
-  num_train_epochs: 10
-  per_device_train_batch_size: 2
-  per_device_eval_batch_size: 2
-  gradient_accumulation_steps: 8
+  num_epochs: 10
+  batch_size: 2
   learning_rate: 2.0e-5
   weight_decay: 0.01
-  warmup_ratio: 0.1
-  lr_scheduler_type: "cosine"
-  logging_steps: 10
-  save_steps: 100
-  eval_steps: 100
-  save_total_limit: 3
-  fp16: false
-  bf16: true
-  gradient_checkpointing: true
-  dataloader_num_workers: 4
-  remove_unused_columns: false
-  report_to: "tensorboard"
+  gradient_accumulation_steps: 4
+  speaker_name: "qinche"  # 微调后的说话人名称
 
 # 推理配置
 inference:
