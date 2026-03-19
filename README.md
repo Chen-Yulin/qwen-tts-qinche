@@ -39,7 +39,15 @@ pip install -r requirements.txt
 
 ### 2. 准备数据
 
-#### 2.1 从视频提取音频（可选）
+#### 下载预处理数据（推荐）
+
+```bash
+huggingface-cli download CallMeChen/qwen-tts-qinche-data --local-dir data --repo-type dataset
+```
+
+#### 自行处理数据
+
+##### 2.1 从视频提取音频（可选）
 
 ```bash
 mkdir -p data/raw
@@ -49,7 +57,7 @@ for f in data/raw_videos/*.mp4; do
 done
 ```
 
-#### 2.2 处理音频（VAD切分 + Whisper转录）
+##### 2.2 处理音频（VAD切分 + Whisper转录）
 
 ```bash
 python scripts/prepare_qwen_tts_data.py \

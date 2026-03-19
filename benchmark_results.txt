@@ -1,7 +1,44 @@
-Qwen-TTS Inference Benchmark Results
-Model: output/checkpoint-epoch-9
-Text: 大家好，我叫秦彻，今天天气真不错。
-Runs: 5
+=== SDPA (PyTorch Native) ===
+`torch_dtype` is deprecated! Use `dtype` instead!
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 1: 3.514s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 2: 4.160s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 3: 3.622s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 4: 3.389s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 5: 3.688s
+  Average: 3.675s
 
-torch.compile: 3.798s (1.22x)
-Flash Attention 2: 4.646s (1.00x)
+=== Flash Attention 2 ===
+You are attempting to use Flash Attention 2 without specifying a torch dtype. This might lead to unexpected behaviour
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 1: 4.316s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 2: 4.649s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 3: 4.918s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 4: 4.867s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 5: 5.190s
+  Average: 4.788s
+
+=== torch.compile ===
+  Compiling (first run)...
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 1: 3.855s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 2: 3.345s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 3: 3.627s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 4: 3.810s
+Setting `pad_token_id` to `eos_token_id`:2150 for open-end generation.
+  Run 5: 3.801s
+  Average: 3.687s

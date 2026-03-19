@@ -13,7 +13,7 @@ def main():
     parser.add_argument(
         "--model_path",
         type=str,
-        default="output/checkpoint-epoch-2",
+        default="output/checkpoint-epoch-5",
         help="Path to fine-tuned model",
     )
     parser.add_argument(
