@@ -31,7 +31,7 @@ qwen-tts-qc/
 
 ## 快速开始
 
-### 1. 安���依赖
+### 1. 依赖
 
 ```bash
 pip install -r requirements.txt
